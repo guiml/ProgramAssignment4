@@ -2,9 +2,6 @@
 title: "Programming Assignment 4"
 author: "Guilherme Mussoi Louzada"
 date: "April 2nd 2016"
-output:
-  html_document:
-    keep_md: yes
 ---
 
 ## Coursera Programming Assignment 4
