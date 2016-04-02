@@ -31,6 +31,6 @@ The cleaning scripts agregates the different files that contains the separated i
 
 After agregating the information, the script renames the column names to a tidy format, and then summarize and export the information to the file tidy.csv with the average of each variable for each activity and each subject.
 
-##Description of the variables in the tiny_data.txt file
- - Dimensions of the dataset: 10299 records, split into 561 variables 
+##Description of the variables in the tidy.csv file
+ - Dimensions of the dataset: 6 groups and 561 variables
  
