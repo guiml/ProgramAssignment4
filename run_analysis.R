@@ -1,93 +1,56 @@
 # 1 Merges the training and the test sets to create one data set.
 
-##########################################################
-#Merges the training and the test sets to create one data set.
-##########################################################
 
 ##########################################################
-### BUILD THE VECTOR CONTAINING THE LABELS
-##########################################################
-library(data.table)
-Cnames <- read.csv("./data/UCI/features.txt",header = FALSE, sep="|")
-ColunmNames <- as.vector(Cnames$V1)
-#---------------------------------------------------------
-
-##########################################################
-### MERGE TRAINING AND TEST DATA SETS
+### READ TRAINING AND TEST DATA SETS
 ##########################################################
 
-X_test <- read.csv("./data/UCI/test/X_test.txt", sep="", header = FALSE, col.names = ColunmNames)
-#length(names(X_test))
-#names(X_test)
-
-X_train <- read.csv("./data/UCI/train/X_train.txt", sep="", header = FALSE, col.names = ColunmNames)
-#length(names(X_train))
-
-X_total <- rbind(X_test, X_train) 
-#---------------------------------------------------------
+X_train <- read.csv("./data/UCI/train/X_train.txt", sep="", header = FALSE)
+X_train[,562] <- read.csv("./data/UCI/train/subject_train.txt", sep="", header = FALSE)
+X_train[,563] <- read.csv("./data/UCI/train/Y_train.txt", header = FALSE)
 
 
-# 2 Extracts only the measurements on the mean and standard deviation for 
-#each measurement.
-
-##########################################################
-### GETTING THE MEASUREMENTS ON MEAN OR STD DEV
-##########################################################
-
-mean_stddev <- X_total[ , grep("Mean|std", colnames(X_total))]
-
-#names(mean_stddev)
-#---------------------------------------------------------
+X_test <- read.csv("./data/UCI/test/X_test.txt", sep="", header = FALSE)
+X_test[,562] <- read.csv("./data/UCI/test/Y_test.txt", sep="", header = FALSE)
+X_test[,563] <- read.csv("./data/UCI/test/subject_test.txt", header = FALSE)
 
 
-
-# 3 Uses descriptive activity names to name the activities in the data set
-
-
-##########################################################
-### CREATING LABEL NAMES DATA SET
-##########################################################
-Y_test <- read.csv("./data/UCI/test/Y_test.txt", header = FALSE)
-#length(names(Y_test))
-
-Y_train <- read.csv("./data/UCI/train/Y_train.txt", header = FALSE)
-#length(names(Y_train))
-
-Y_total <- rbind(Y_test, Y_train) 
-names(Y_total) <- c("codactivity") 
-
-activity_labels <- read.csv("./data/UCI/activity_labels.txt",col.names=c("codactivity","descactivity"), sep=" ", header = FALSE)
-
-Y_totallabel <- merge(activity_labels, Y_total, all = TRUE, by = c("codactivity"))
-X_total$codactivity <- Y_totallabel$codactivity
-X_total$descactivity <- Y_totallabel$descactivity
-#---------------------------------------------------------
+aLabels = read.csv("./data/UCI/activity_labels.txt", sep="", header=FALSE)
+features = read.csv("./data/UCI/features.txt", sep="", header=FALSE)
+features[,2] = gsub('-mean', 'Mean', features[,2])
+features[,2] = gsub('-std', 'Std', features[,2])
+features[,2] = gsub('[-()]', '', features[,2])
 
 
-# 4 Appropriately labels the data set with descriptive variable names.
+xTotal = rbind(X_train, X_test)
 
+meanstddev <- grep(".*Mean.*|.*Std.*", features[,2])
+ 
+features <- features[meanstddev,]
+ 
+meanstddev <- c(meanstddev, 562, 563)
+ 
+xTotal <- xTotal[,meanstddev]
+ 
+colnames(xTotal) <- c(features$V2, "activity", "subject")
+colnames(xTotal) <- tolower(colnames(xTotal))
+
+currentActivity = 1
+for (currentActivityLabel in aLabels$V2) {
+  xTotal$activity <- gsub(currentActivity, aLabels, xTotal$activity)
+  currentActivity <- currentActivity + 1
+}
+
+xTotal$activity <- as.factor(xTotal$activity)
+xTotal$subject <- as.factor(xTotal$subject)
+  
 
 ##########################################################
-### CHANGING LABLES IN THE DATASET
-##########################################################
-names(X_total) = tolower(names(X_total))
-names(X_total) = gsub("[(]","",names(X_total))
-names(X_total) = gsub(")","",names(X_total))
-names(X_total) = gsub("[.]","",names(X_total))
-names(X_total) = gsub("^x","",names(X_total))
-names(X_total) = gsub("descactivity","activitydescription",names(X_total))
-names(X_total) = gsub("codactivity","activitycode",names(X_total))
-names(X_total) 
-
-#---------------------------------------------------------
-
-#From the data set in step 4, creates a second, independent tidy data set 
-#with the average of each variable for each activity and each subject.
-
-##########################################################
-### SUMARIZING MEAN BY ACTIVITY 
+### SUMARIZING MEAN BY ACTIVITY AND WRITING TIDY DATA SET
 ##########################################################
 
-#X_total <- data.table(X_total)
+GroupedData <- aggregate(X_total, by=list(activity = X_total$activity, subject=X_total$subject), mean)
 
-GroupedData <- aggregate(X_total[,1:561], list(X_total$activitydescription), mean)
+ 
+write.table(GroupedData, "tidy.txt", sep="\t")
+ 
