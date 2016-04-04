@@ -116,6 +116,8 @@ tgravityaccmeanz;
 tgravityaccstdx;
 tgravityaccstdy;
 tgravityaccstdz;
+activity;
+subject;
 
 ###Script steps
 1) Read TRAINING data
