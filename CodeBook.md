@@ -20,7 +20,7 @@ https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Datas
 ... and then unziped to the UCI folder
 
 
-###Cleaning of the data
+###Data information
 The cleaning scripts agregates the different files that contains the separated information:
 - 'activity_labels.txt' - Contains the names of each activity
 - 'features.txt' - Contains the 561 feature's names described in the dataset files
@@ -29,8 +29,18 @@ The cleaning scripts agregates the different files that contains the separated i
 - 'test/X_test.txt': Test set.
 - 'test/y_test.txt': Test labels.
 
-After agregating the information, the script renames the column names to a tidy format, and then summarize and export the information to the file tidy.csv with the average of each variable for each activity and each subject.
-
 ##Description of the variables in the tidy.csv file
  - Dimensions of the dataset: 6 groups and 561 variables
- 
+
+
+###Script steps
+1) Read TRAINING data
+2) Read TEST data
+3) Read LABELS data
+4) Combine both TRAIN and TEST data into a Total dataset
+5) Select only mean and std.dev from the labels
+6) Name TOTAL data set with the names of the features (restricted to the ones selected in the step 5)
+7) Loop through activities and apply label in Total data set
+8) Transform activity and subject fields to factors to be grouped accordingly
+9) Group data by activity and subject by mean
+10) Write file
