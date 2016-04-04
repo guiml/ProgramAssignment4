@@ -32,15 +32,108 @@ The cleaning scripts agregates the different files that contains the separated i
 ##Description of the variables in the tidy.csv file
  - Dimensions of the dataset: 6 groups and 561 variables
 
+##Variables involved:
+activity
+fbodyaccjerkmeanfreqx
+fbodyaccjerkmeanfreqy
+fbodyaccjerkmeanfreqz
+fbodyaccjerkmeanx
+fbodyaccjerkmeany
+fbodyaccjerkmeanz
+fbodyaccjerkstdx
+fbodyaccjerkstdy
+fbodyaccjerkstdz
+fbodyaccmagmean
+fbodyaccmagmeanfreq
+fbodyaccmagstd
+fbodyaccmeanfreqx
+fbodyaccmeanfreqy
+fbodyaccmeanfreqz
+fbodyaccmeanx
+fbodyaccmeany
+fbodyaccmeanz
+fbodyaccstdx
+fbodyaccstdy
+fbodyaccstdz
+fbodybodyaccjerkmagmean
+fbodybodyaccjerkmagmeanfreq
+fbodybodyaccjerkmagstd
+fbodybodygyrojerkmagmean
+fbodybodygyrojerkmagmeanfreq
+fbodybodygyrojerkmagstd
+fbodybodygyromagmean
+fbodybodygyromagmeanfreq
+fbodybodygyromagstd
+fbodygyromeanfreqx
+fbodygyromeanfreqy
+fbodygyromeanfreqz
+fbodygyromeanx
+fbodygyromeany
+fbodygyromeanz
+fbodygyrostdx
+fbodygyrostdy
+fbodygyrostdz
+subject
+tbodyaccjerkmagmean
+tbodyaccjerkmagstd
+tbodyaccjerkmeanx
+tbodyaccjerkmeany
+tbodyaccjerkmeanz
+tbodyaccjerkstdx
+tbodyaccjerkstdy
+tbodyaccjerkstdz
+tbodyaccmagmean
+tbodyaccmagstd
+tbodyaccmeanx
+tbodyaccmeany
+tbodyaccmeanz
+tbodyaccstdx
+tbodyaccstdy
+tbodyaccstdz
+tbodygyrojerkmagmean
+tbodygyrojerkmagstd
+tbodygyrojerkmeanx
+tbodygyrojerkmeany
+tbodygyrojerkmeanz
+tbodygyrojerkstdx
+tbodygyrojerkstdy
+tbodygyrojerkstdz
+tbodygyromagmean
+tbodygyromagstd
+tbodygyromeanx
+tbodygyromeany
+tbodygyromeanz
+tbodygyrostdx
+tbodygyrostdy
+tbodygyrostdz
+tgravityaccmagmean
+tgravityaccmagstd
+tgravityaccmeanx
+tgravityaccmeany
+tgravityaccmeanz
+tgravityaccstdx
+tgravityaccstdy
+tgravityaccstdz
+
+
 
 ###Script steps
 1) Read TRAINING data
+
 2) Read TEST data
+
 3) Read LABELS data
+
 4) Combine both TRAIN and TEST data into a Total dataset
+
 5) Select only mean and std.dev from the labels
+
 6) Name TOTAL data set with the names of the features (restricted to the ones selected in the step 5)
+
 7) Loop through activities and apply label in Total data set
+
 8) Transform activity and subject fields to factors to be grouped accordingly
+
 9) Group data by activity and subject by mean
+
 10) Write file
