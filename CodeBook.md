@@ -1,7 +1,7 @@
 ---
 title: "Programming Assignment 4"
 author: "Guilherme Mussoi Louzada"
-date: "April 2nd 2016"
+date: "April 3rd 2016"
 ---
 
 ## Coursera Programming Assignment 4
